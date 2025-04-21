@@ -1,0 +1,9 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+produit_controller:
+    resource: '../src/Controller/ProduitController.php'
+    type: annotation

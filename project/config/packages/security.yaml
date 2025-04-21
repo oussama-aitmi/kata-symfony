@@ -1,0 +1,44 @@
+security:
+    password_hashers:
+        App\Entity\User:
+            algorithm: auto
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern: ^/token
+            stateless: true
+            json_login:
+                check_path: /token
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        main:
+            stateless: true
+            provider: app_user_provider
+            jwt: ~
+            # Permet d’accéder à l’utilisateur via $this->getUser()
+
+    access_control:
+        # Autoriser l'accès à l'enregistrement
+        - { path: ^/account, roles: PUBLIC_ACCESS }
+
+        # Accès libre auu token
+        - { path: ^/token, roles: PUBLIC_ACCESS }
+
+        # Exemple : protection de tous les routes API
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+
+        # Tout le reste nécessite une authentification
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
