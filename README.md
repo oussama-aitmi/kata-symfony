@@ -1,4 +1,4 @@
-# Test KATA 
+# Test KATA (projet non abouti)
 
 
 ## Installer et démarrer de projet Kata (Symfony 6.4)
